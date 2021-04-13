@@ -31,6 +31,7 @@ SOFTWARE.
 #include "stm32f4xx.h"
 #include "stm32f429i_discovery.h"
 #include "stm32f4xx_gpio.h"
+#include "stm32f4_tim2.h"
 
 /* Private macro */
 /* Private variables */
@@ -44,6 +45,7 @@ SOFTWARE.
 **
 **===========================================================================
 */
+
 int main(void)
 {
   int i = 0;
@@ -58,15 +60,20 @@ int main(void)
   *  E.g.  SCB->VTOR = 0x20000000;  
   */
 
-  /* TODO - Add your application code here */
-
+  /*
   STM_EVAL_LEDInit(LED3);
   STM_EVAL_LEDInit(LED4);
 
   STM_EVAL_LEDOn(LED3);
   STM_EVAL_LEDOn(LED4);
+  */
+  /*Initializing the timer - every 1ms*/
+  STM_EVAL_LEDInit(LED3);
+  //STM_EVAL_LEDToggle(LED3);
+  TIM2_INIT();
 
   /* Infinite loop */
+
   while (1)
   {
 	  i++;
