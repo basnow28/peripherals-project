@@ -16,7 +16,5 @@
 
 
 void TIM2_INIT(void);
-void TIM2_ISRHandler(void);
 
-
-#endif /* STM32F4_TIM10_H_ */
+#endif /* STM32F4_TIM2_H_ */

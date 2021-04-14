@@ -19,19 +19,16 @@ void TIM2_INIT(){
 	    // so update event is 0.5Hz or 500ms
 	    // Update Event (Hz) = timer_clock / ((TIM_Prescaler + 1) *
 	    // (TIM_Period + 1))
-	    // Update Event (Hz) = 84MHz / ((4199 + 1) * (9999 + 1)) = 2 Hz
+	    // Update Event (Hz) = 84MHz / ((4199 + 1) * (9999 + 1)) =
+		//TODO 1000 Hz
 	    TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStruct;
-	    TIM_TimeBaseInitStruct.TIM_Prescaler = 4199;
-	    TIM_TimeBaseInitStruct.TIM_Period = 9999;
+	    TIM_TimeBaseInitStruct.TIM_Prescaler = 1;
+	    TIM_TimeBaseInitStruct.TIM_Period = 50000;
 	    TIM_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;
 	    TIM_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;
 
 	    // TIM2 initialize
 	    TIM_TimeBaseInit(TIM2, &TIM_TimeBaseInitStruct);
-	    // Enable TIM2 interrupt
-	    TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
-	    // Start TIM2
-	    TIM_Cmd(TIM2, ENABLE);
 
 	    // Nested vectored interrupt settings
 	    // TIM2 interrupt is most important (PreemptionPriority and
@@ -42,15 +39,21 @@ void TIM2_INIT(){
 	    NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0;
 	    NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
 	    NVIC_Init(&NVIC_InitStruct);
+
+	    // Enable TIM2 interrupt
+	    TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
+	    // Start TIM2*/
+	    TIM_Cmd(TIM2, ENABLE);
 }
 
-void TIM2_IRQHandler()
+void TIM2_IRQHandler(void)
 {
     // Checks whether the TIM2 interrupt has occurred or not
     if (TIM_GetITStatus(TIM2, TIM_IT_Update))
     {
         // Toggle green LED (GPIOG13)
     	STM_EVAL_LEDToggle(LED3);
+    	TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
     }
 }
 

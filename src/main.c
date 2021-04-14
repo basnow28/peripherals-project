@@ -32,6 +32,7 @@ SOFTWARE.
 #include "stm32f429i_discovery.h"
 #include "stm32f4xx_gpio.h"
 #include "stm32f4_tim2.h"
+#include "vehicle_speed_push_button.h"
 
 /* Private macro */
 /* Private variables */
@@ -46,9 +47,12 @@ SOFTWARE.
 **===========================================================================
 */
 
+void assert_failed(uint8_t* file, uint32_t line){}
+
 int main(void)
 {
   int i = 0;
+  int speed_pointer = 0;
 
   /**
   *  IMPORTANT NOTE!
@@ -68,14 +72,23 @@ int main(void)
   STM_EVAL_LEDOn(LED4);
   */
   /*Initializing the timer - every 1ms*/
-  STM_EVAL_LEDInit(LED3);
+  //STM_EVAL_LEDInit(LED3);
   //STM_EVAL_LEDToggle(LED3);
-  TIM2_INIT();
 
+  //Initializing the user push button
+  USER_BUTTON_INIT();
+
+  RCC_TIMCLKPresConfig(RCC_TIMPrescDesactivated);
+
+  TIM2_INIT();
   /* Infinite loop */
+
+  uint32_t tim2_cnt = TIM2->CNT;
 
   while (1)
   {
+	 // change_speed(speed_pointer);
+	  tim2_cnt = TIM2->CNT;
 	  i++;
   }
 }
