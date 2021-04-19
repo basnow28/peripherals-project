@@ -14,7 +14,6 @@
 #include "misc.h"
 #include "stm32f429i_discovery.h"
 
-
 void TIM2_INIT(void);
 
 #endif /* STM32F4_TIM2_H_ */

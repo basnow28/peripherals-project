@@ -72,7 +72,7 @@ int main(void)
   STM_EVAL_LEDOn(LED4);
   */
   /*Initializing the timer - every 1ms*/
-  //STM_EVAL_LEDInit(LED3);
+  STM_EVAL_LEDInit(LED3);
   //STM_EVAL_LEDToggle(LED3);
 
   //Initializing the user push button
